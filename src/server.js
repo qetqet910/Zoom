@@ -21,18 +21,19 @@ wss.on("connection", (Socket) => {
     fakeDB.push(Socket);
     console.log("Connect from Browser");
     Socket["Nickname"] = "익명"
+    Socket.on("close", () => { console.log("Disconnect from Browser"); });
+
     Socket.on("message", (message) => {
         const msg = JSON.parse(message);
-        switch (msg.type) {
-            case "Nick":
-                Socket["Nickname"] = msg.payload
-            case "Chat":
-                fakeDB.forEach((SocketF) =>
-                    SocketF.send(`${Socket.Nickname} : ${msg.payload}`)
-                );
+
+        if (msg.type == "Chat") {
+            fakeDB.forEach((SocketF) =>
+                SocketF.send(`${Socket.Nickname} : ${msg.payload}`)
+            );
+        } else if (msg.type == "Nick") {
+            Socket["Nickname"] = msg.payload
         }
-    })
-    Socket.on("close", () => { console.log("Disconnect from Browser"); });
-})
+    });
+});
 
 server.listen(3000, handleListen)

@@ -20,7 +20,7 @@ const ChatFormFn = (event) => {
 const NickFormFn = (event) => {
     event.preventDefault();
     const NickInput = NickForm.querySelector('input');
-    Socket.send(MakeMessage("Nick", NickInput.value))
+    Socket.send(MakeMessage("Nick", NickInput.value));
     NickInput.value = "";
 }
 
