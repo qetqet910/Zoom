@@ -15,10 +15,23 @@ const handleListen = () => console.log(`Listening on http://localhost:3000`);
 const server = http.createServer(app)
 const wss = new WebSocketServer({ server })
 
+const fakeDB = []
+
 wss.on("connection", (Socket) => {
+    fakeDB.push(Socket);
     console.log("Connect from Browser");
-    Socket.send("Welcome to Server!")
-    Socket.on("message", (message) => { console.log(`Browser : ${message}`); })
+    Socket["Nickname"] = "익명"
+    Socket.on("message", (message) => {
+        const msg = JSON.parse(message);
+        switch (msg.type) {
+            case "Nick":
+                Socket["Nickname"] = msg.payload
+            case "Chat":
+                fakeDB.forEach((SocketF) =>
+                    SocketF.send(`${Socket.Nickname} : ${msg.payload}`)
+                );
+        }
+    })
     Socket.on("close", () => { console.log("Disconnect from Browser"); });
 })
 

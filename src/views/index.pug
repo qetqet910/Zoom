@@ -33,9 +33,13 @@ html(lang="en")
                 a(href="#")
                     b 방 만들기
         main 
-            form
-                ul 
-                    li 
+            ul(class="chatList") 
+            form(class="NickForm")
+                input(type="text", placeholder="별명을 입력해주세요") 
+                button(type="submit") Send
+            form(class="chatForm")
+                input(type="text", placeholder="채팅을 입력해주세요") 
+                button(type="submit") Send
 
         footer 
             hr
