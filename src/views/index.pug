@@ -4,11 +4,14 @@ html(lang="en")
         meta(charset="UTF-8")
         meta(http-equiv="X-UA-Compatible", content="IE=edge")
         meta(name="viewport", content="width=device-width, initial-scale=1.0")
-        title Hoom
+        title Noom ✨
         link(rel="stylesheet", href="../public/css/reset.css")
         link(rel="stylesheet", href="../public/css/style.css")
         link(rel="stylesheet", href="https://unpkg.com/mvp.css")
         link(rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous")
+        link(rel="preconnect" href="https://fonts.googleapis.com")
+        link(rel="preconnect" href="https://fonts.gstatic.com" crossorigin)
+        link(href="https://fonts.googleapis.com/css2?family=Mochiy+Pop+P+One&display=swap" rel="stylesheet")
         link(rel="shortcut icon" href="/favicon.ico" type="image/x-icon")
         link(rel="icon" href="../public/img/favicon/favicon.ico" type="image/x-icon")
     body 
@@ -23,24 +26,42 @@ html(lang="en")
                         a(href="#") MENU
                     li 
                         a(href="#") MENU        
-            h1 Video Call 🚬
+
+            //- Title
+            h1 No
 
             br
             
+            //- Function Module
             p 
-                a(href="#")
-                    i 방 참여하기
-                a(href="#")
-                    b 방 만들기
-        main 
-            ul(class="chatList") 
-            form(class="NickForm")
-                input(type="text", placeholder="별명을 입력해주세요") 
-                button(type="submit") Send
-            form(class="chatForm")
-                input(type="text", placeholder="채팅을 입력해주세요") 
-                button(type="submit") Send
+                a(href="#", class="Nick")
+                    i 닉네임 변경하기
+                a(href="#", class="Chat")
+                    b 채팅 하기
 
+            //- Chat
+            ul(class="ChatTle")
+                li 
+                    label(for="Chat") 채팅창
+                    ul(class="chatList") 
+                    form(class="chatForm")
+                        div(class="inputs")
+                            input(type="text", id="Chat", autocomplete="off" placeholder="채팅을 입력해주세요") 
+                            button(type="submit") Send
+
+            //- Modal                          
+            div(class="modal")
+                div(class="real")         
+                    span(class="close")  
+                        i(class="fas fa-times")     
+                    form(class="NickForm")
+                        label(for="Nick") 닉네임 변경
+                        div(class="inputs")
+                            input(type="text", autocomplete="off" autofocus required,  id="Nick", placeholder="별명을 입력해주세요") 
+                            button(type="submit") Send
+            
+            //- Complete
+            div(class="Complete") 성공!
         footer 
             hr
             p 

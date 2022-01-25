@@ -4,6 +4,12 @@ const Socket = new WebSocket(`ws://${window.location.host}`)
 const ChatList = document.querySelector('.chatList');
 const ChatForm = document.querySelector('.chatForm');
 const NickForm = document.querySelector('.NickForm');
+const NickB = document.querySelector('.Nick');
+const ChatB = document.querySelector('.Chat');
+const Modal = document.querySelector(".modal")
+const CloseBtn = document.querySelector(".close");
+const ChatTle = document.querySelector(".ChatTle");
+const Complete = document.querySelector(".Complete");
 
 const MakeMessage = (type, payload) => {
     const msg = { type, payload };
@@ -22,6 +28,11 @@ const NickFormFn = (event) => {
     const NickInput = NickForm.querySelector('input');
     Socket.send(MakeMessage("Nick", NickInput.value));
     NickInput.value = "";
+    Modal.classList.remove("Active");
+    Complete.classList.toggle("Active");
+    setTimeout(() => {
+        Complete.classList.remove("Active");
+    }, 2000)
 }
 
 ChatForm.addEventListener('submit', ChatFormFn)
@@ -39,4 +50,22 @@ Socket.addEventListener('close', () => {
 
 Socket.addEventListener('open', () => {
     console.log("Connect from Server 👍");
+})
+
+
+
+const NickBEvent = (event) => {
+    event.preventDefault();
+    Modal.classList.toggle("Active")
+}
+
+const ChatBEvent = (event) => {
+    event.preventDefault();
+    ChatTle.classList.toggle("Active")
+}
+
+NickB.addEventListener("click", NickBEvent)
+ChatB.addEventListener("click", ChatBEvent)
+CloseBtn.addEventListener("click", () => {
+    Modal.classList.remove("Active")
 })

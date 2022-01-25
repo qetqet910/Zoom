@@ -10,12 +10,192 @@
     box-sizing: border-box;
 }
 
-h1 {
-    display: block;
-    font-size: 3em;
-    margin-block-start: 0.67em;
-    margin-block-end: 0.67em;
-    margin-inline-start: 0px;
-    margin-inline-end: 0px;
-    font-weight: bold;
+@mixin DisplayF {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@mixin Form {
+    form {
+        all: unset;
+        @include DisplayF();
+        align-items: flex-start;
+        flex-direction: column;
+        width: 100%;
+
+        label {
+            font-size: 1.4em;
+            margin-bottom: calc(10px + 1vw)
+        }
+
+        .inputs {
+            display: grid;
+            grid-template-columns: 1fr .1fr;
+            width: 100%;
+            margin: 10px 0px;
+
+            input {
+                all: unset;
+                color: black;
+                padding: 8px 20px;
+                background-color: white;
+                border-top-left-radius: 6px;
+                border-bottom-left-radius: 6px;
+            }
+
+            button {
+                all: unset;
+                color: white;
+                background-color: royalblue;
+                padding: 10px 20px;
+                font-family: 'Mochiy Pop P One', sans-serif;
+                border-top-right-radius: 6px;
+                border-bottom-right-radius: 6px;
+                transition: background-color .2s ease-in-out;
+                cursor: pointer;
+
+                &:hover {
+                    background-color: darken(royalblue, 10%);
+                }
+            }
+        }
+    }
+}
+
+body {
+
+    h1 {
+        display: block;
+        font-size: 3em;
+        margin-block-start: 0.67em;
+        margin-block-end: 0.67em;
+        margin-inline-start: 0px;
+        margin-inline-end: 0px;
+        font-weight: bold;
+    }
+
+    .ChatTle {
+        display: none;
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr;
+        column-gap: calc(10px + 1vw);
+        width: 100%;
+        margin-top: calc(80px + .5vw);
+
+        li {
+            @include DisplayF();
+            flex-direction: column;
+            box-shadow: 0px 0px 2px gray;
+            width: 100%;
+            height: 100%;
+            padding: 10px;
+            @include Form();
+
+            label {
+                font-size: 1.6em;
+                margin-bottom: 10px;
+            }
+
+            .chatList {
+                all: unset;
+                background-color: white;
+                width: 100%;
+                min-height: calc(500px + calc(1vw));
+
+                li {
+                    color: black;
+                }
+            }
+        }
+    }
+
+    .Active {
+        display: grid;
+    }
+
+    .modal {
+        position: fixed;
+        @include DisplayF();
+        display: none;
+        left: 0px;
+        top: 0px;
+        width: 100%;
+        height: 100%;
+        transition: all .5s;
+
+
+        &::before {
+            content: '';
+            position: absolute;
+            left: 0px;
+            top: 0px;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, .5)
+        }
+
+        .real {
+            position: relative;
+            padding: 40px;
+            background-color: rgb(230, 230, 230);
+            z-index: 10;
+            border-radius: 5px;
+            @include Form();
+
+            span {
+                position: absolute;
+                right: 20px;
+                top: 16px;
+                color: black;
+                cursor: pointer;
+                transition: all .25s;
+
+                i {
+                    font-size: 1.2em;
+                    pointer-events: none;
+                    transition: all .25s;
+                }
+
+                &:hover {
+                    transform: scale(1.2);
+
+                    i {
+                        transform: rotate(90deg);
+                    }
+                }
+
+            }
+
+            label {
+                color: black;
+                margin-bottom: 100px;
+            }
+        }
+    }
+
+    .Active {
+        display: flex;
+    }
+
+    .Complete {
+        position: fixed;
+        opacity: 0;
+        z-index: -90;
+        bottom: 8%;
+        left: 50%;
+        transform: translateX(-50%);
+        padding: 6px 10px;
+        border-radius: 6px;
+        background-color: rgb(47, 148, 47);
+        color: white;
+        font-weight: bold;
+        font-family: 'Mochiy Pop P One', sans-serif;
+        transition: all .25s;
+    }
+
+    .Active {
+        opacity: 1;
+        z-index: 10;
+    }
 }
