@@ -11,11 +11,13 @@
     "@babel/core": "^7.14.6",
     "@babel/node": "^7.14.7",
     "@babel/preset-env": "^7.14.7",
-    "nodemon": "^2.0.12"
+    "nodemon": "^2.0.12",
+    "socket.io": "^4.4.1"
   },
   "dependencies": {
     "express": "^4.17.1",
     "pug": "^3.0.2",
+    "websocket.io": "^0.2.1",
     "ws": "^8.4.2"
   }
 }

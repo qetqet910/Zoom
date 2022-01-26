@@ -1,39 +1,24 @@
-import express from "express";
 import http from "http";
-import WebSocket, { WebSocketServer } from "ws";
+import SocketIO from "socket.io";
+import express from "express";
 
 const app = express();
 
-app.set("view engine", "pug")
-app.set("views", __dirname + "/views")
-app.use("/public", express.static(__dirname + "/public"))
-app.get("/", (_, res) => res.render("index"))
-app.get("/*", (_, res) => res.redirect("/"))
+app.set("view engine", "pug");
+app.set("views", __dirname + "/views");
+app.use("/public", express.static(__dirname + "/public"));
+app.get("/", (_, res) => res.render("index"));
+app.get("/*", (_, res) => res.redirect("/"));
 
-const handleListen = () => console.log(`Listening on http://localhost:3000`);
+const httpServer = http.createServer(app);
+const wsServer = SocketIO(httpServer);
 
-const server = http.createServer(app)
-const wss = new WebSocketServer({ server })
-
-const fakeDB = []
-
-wss.on("connection", (Socket) => {
-    fakeDB.push(Socket);
-    console.log("Connect from Browser");
-    Socket["Nickname"] = "익명"
-    Socket.on("close", () => { console.log("Disconnect from Browser"); });
-
-    Socket.on("message", (message) => {
-        const msg = JSON.parse(message);
-
-        if (msg.type == "Chat") {
-            fakeDB.forEach((SocketF) =>
-                SocketF.send(`${Socket.Nickname} : ${msg.payload}`)
-            );
-        } else if (msg.type == "Nick") {
-            Socket["Nickname"] = msg.payload
-        }
-    });
+wsServer.on("connection", (socket) => {
+    socket.on("EnterRoom", (room, EnterRoomFunc) => {
+        socket.join(room);
+        EnterRoomFunc();
+    })
 });
 
-server.listen(3000, handleListen)
+const handleListen = () => console.log(`Listening on http://localhost:3000`);
+httpServer.listen(3000, handleListen);
