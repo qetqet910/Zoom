@@ -2,21 +2,21 @@ const Socket = io();
 
 const ChatForm = document.querySelector(".Room");
 const NameForm = document.querySelector(".Name");
-const RoomName = document.querySelector(".RoomName");
 
+let RN;
 NameForm.hidden = true;
 
-console.log(ChatForm, NameForm, RoomName);
-
-const EnterRoomFunc = (RN) => {
+function EnterRoomFunc() {
     ChatForm.hidden = true;
     NameForm.hidden = false;
+    const RoomName = document.querySelector(".RoomName");
     RoomName.innerText = `Room : ${RN}`;
 }
 
 ChatForm.addEventListener("submit", (event) => {
     event.preventDefault()
     const input = ChatForm.querySelector('input');
-    Socket.emit("EnterRoom", { payload: input.value }, EnterRoomFunc(input.value))
+    RN = input.value
+    Socket.emit("enter_room", input.value, EnterRoomFunc())
     input.value = "";
 }, false)
